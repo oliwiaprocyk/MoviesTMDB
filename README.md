@@ -2,7 +2,7 @@
 MoviesTMDB is the application where the movies are listed and the details of the clicked movie are displayed, also has the feature of searching for the movie you want.
 
 ## Technologies
-MVVM, Singleton Design Patern, UIKit, UrlSession, Generics, Protocol Delegate Pattern
+MVVM, Singleton Design Patern, UIKit, UrlSession, Generics, Protocol Delegate Pattern, 3rd Party Libraries(Kingfisher)
 
 ### Main Page
 https://user-images.githubusercontent.com/124703016/224785723-d4640168-0bd5-4a78-bdc2-b4524ec83ae9.mp4
