@@ -39,11 +39,11 @@ extension DetailsVC: DetailDelegate {
     
     func setup(movie: DetailsModel) {
         DispatchQueue.main.async {
-            let imageURL = "https://image.tmdb.org/t/p/w500\(movie.posterPath)"
             
             self.titleMovieLabel.text = movie.title
             self.overviewLabel.text = movie.overview
-            self.movieImageView.downloaded(from: imageURL)
+            let url = URL(string: "https://image.tmdb.org/t/p/w500\(movie.posterPath)")
+            self.movieImageView.kf.setImage(with: url)
         }
     }
 }

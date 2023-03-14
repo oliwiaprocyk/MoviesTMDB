@@ -72,8 +72,8 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         cell.overviewLabel.text = movie.overview
         
         if let path = movie.posterPath {
-            let imageUrl = "http://image.tmdb.org/t/p/w500\(path)"
-            cell.movieImageView.downloaded(from: imageUrl)
+            let url = URL(string: "http://image.tmdb.org/t/p/w500\(path)")
+            cell.movieImageView.kf.setImage(with: url)
         }
         
         return cell
