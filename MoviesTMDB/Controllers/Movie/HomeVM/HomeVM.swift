@@ -8,6 +8,7 @@
 import Foundation
 
 protocol HomeDelegate: AnyObject {
+    func startActivityIndicator()
     func success()
     func error(error: String)
 }
@@ -19,9 +20,9 @@ final class HomeVM {
     var page = 1
     
     func getMovie() {
+        self.delegate?.startActivityIndicator()
         MovieService.shared.getMovies(page: page) { [weak self] response, errorMessage in
             guard let self = self else { return }
-            
             if let response = response {
                 self.movies.append(contentsOf: response.results)
                 self.page += 1
@@ -33,9 +34,9 @@ final class HomeVM {
     }
     
     func searchMovie(query: String) {
+        self.delegate?.startActivityIndicator()
         SearchService.shared.searchMovie(page: page, query: query) { [weak self] response, errorMessage in
             guard let self = self else { return }
-            
             if let response = response {
                 self.movies = response.results
                 self.delegate?.success()

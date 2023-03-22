@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class DetailsVC: UIViewController {
+final class DetailsVC: BaseViewController {
     
     @IBOutlet weak var movieImageView: UIImageView!
     @IBOutlet weak var titleMovieLabel: UILabel!
@@ -23,6 +23,7 @@ final class DetailsVC: UIViewController {
         if let movieID = movieID {
             viewModel.getDetail(movieID: movieID)
         }
+        setupActivityIndicator()
     }
     
     func getID(id: Int) {
@@ -31,6 +32,12 @@ final class DetailsVC: UIViewController {
 }
 
 extension DetailsVC: DetailDelegate {
+    func startActivityIndicator() {
+        DispatchQueue.main.async {
+            self.activityIndicator.startAnimating()
+        }
+    }
+    
     func error(error: String) {
         let alert = UIAlertController(title: "Alert", message: "\(error)", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Click", style: UIAlertAction.Style.default, handler: nil))
@@ -39,11 +46,13 @@ extension DetailsVC: DetailDelegate {
     
     func setup(movie: DetailsModel) {
         DispatchQueue.main.async {
-            
             self.titleMovieLabel.text = movie.title
             self.overviewLabel.text = movie.overview
-            let url = URL(string: "https://image.tmdb.org/t/p/w500\(movie.posterPath)")
-            self.movieImageView.kf.setImage(with: url)
+            if let path = movie.posterPath {
+                let url = URL(string: "https://image.tmdb.org/t/p/w500\(path)")
+                self.movieImageView.kf.setImage(with: url)
+            }
+            self.activityIndicator.stopAnimating()
         }
     }
 }

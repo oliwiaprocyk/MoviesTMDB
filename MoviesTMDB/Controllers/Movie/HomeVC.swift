@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HomeVC: UIViewController {
+final class HomeVC: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -18,6 +18,7 @@ final class HomeVC: UIViewController {
         super.viewDidLoad()
         
         setup()
+        setupActivityIndicator()
         viewModel.delegate = self
         viewModel.getMovie()
     }
@@ -34,12 +35,20 @@ final class HomeVC: UIViewController {
         searchBar.delegate = self
         tableView.register(UINib(nibName: Constants.cellNibName, bundle: nil), forCellReuseIdentifier: Constants.cellIdentifier)
     }
+
 }
 
 extension HomeVC: HomeDelegate {
+    func startActivityIndicator() {
+        DispatchQueue.main.async {
+            self.activityIndicator.startAnimating()
+        }
+    }
+    
     func success() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
+            self.activityIndicator.stopAnimating()
         }
     }
     
@@ -57,7 +66,6 @@ extension HomeVC: HomeDelegate {
     }
 }
 
-
 extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.movies.count
@@ -74,8 +82,8 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         if let path = movie.posterPath {
             let url = URL(string: "http://image.tmdb.org/t/p/w500\(path)")
             cell.movieImageView.kf.setImage(with: url)
+            
         }
-        
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -102,7 +110,6 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     }
 }
 extension HomeVC: UISearchBarDelegate {
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText != "" {
             self.viewModel.searchMovie(query: searchText)
