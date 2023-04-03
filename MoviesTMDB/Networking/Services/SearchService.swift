@@ -26,10 +26,5 @@ class SearchService {
             }
         }
     }
-    
-    
-    
-    
-    
-    
+
 }

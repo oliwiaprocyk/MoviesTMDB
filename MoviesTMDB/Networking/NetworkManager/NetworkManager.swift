@@ -36,7 +36,7 @@ class NetworkManager {
         }
     }
     private func handlerResponse<T: Codable>(data: Data,
-                                                 completion: @escaping((Result<T, ErrorTypes>) -> ())) {
+                                             completion: @escaping((Result<T, ErrorTypes>) -> ())) {
         do {
             let result = try JSONDecoder().decode(T.self, from: data)
             completion(.success(result))

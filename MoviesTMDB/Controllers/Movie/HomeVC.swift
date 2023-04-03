@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class HomeVC: BaseViewController {
     
@@ -92,6 +93,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         guard let movieID = viewModel.movies[indexPath.row].id else { return }
         
         vc?.getID(id: movieID)
+        print(movieID)
         self.navigationController?.pushViewController(vc!, animated: true)
     }
     
