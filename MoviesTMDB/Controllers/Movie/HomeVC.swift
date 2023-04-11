@@ -6,10 +6,8 @@
 //
 
 import UIKit
-import Kingfisher
 
 final class HomeVC: BaseViewController {
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -17,12 +15,12 @@ final class HomeVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setup()
         setupActivityIndicator()
         viewModel.delegate = self
         viewModel.getMovie()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         searchBar.text = ""
@@ -36,7 +34,6 @@ final class HomeVC: BaseViewController {
         searchBar.delegate = self
         tableView.register(UINib(nibName: Constants.cellNibName, bundle: nil), forCellReuseIdentifier: Constants.cellIdentifier)
     }
-
 }
 
 extension HomeVC: HomeDelegate {
@@ -74,26 +71,16 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as! MovieCell
-        
-        let movie = viewModel.movies[indexPath.row]
-        
-        cell.titleMovieLable.text = movie.title
-        cell.overviewLabel.text = movie.overview
-        
-        if let path = movie.posterPath {
-            let url = URL(string: "http://image.tmdb.org/t/p/w500\(path)")
-            cell.movieImageView.kf.setImage(with: url)
-            
-        }
+        cell.setCell(with: viewModel.movies[indexPath.row])
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: Constants.storyboardIdDVC) as? DetailsVC
         
         guard let movieID = viewModel.movies[indexPath.row].id else { return }
         
         vc?.getID(id: movieID)
-        print(movieID)
         self.navigationController?.pushViewController(vc!, animated: true)
     }
     
@@ -111,6 +98,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         }
     }
 }
+
 extension HomeVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText != "" {

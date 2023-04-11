@@ -9,7 +9,6 @@ import UIKit
 import Kingfisher
 
 final class DetailsVC: BaseViewController {
-    
     @IBOutlet weak var movieImageView: UIImageView!
     @IBOutlet weak var titleMovieLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
@@ -19,8 +18,11 @@ final class DetailsVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
+    }
+    
+    private func setup() {
         viewModel.delegate = self
-        
         if let movieID = movieID {
             viewModel.getDetail(movieID: movieID)
         }

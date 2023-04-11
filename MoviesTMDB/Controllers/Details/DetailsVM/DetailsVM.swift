@@ -12,6 +12,7 @@ protocol DetailDelegate: AnyObject {
     func setup(movie: DetailsModel)
     func error(error: String)
 }
+
 final class DetailsVM {
     weak var delegate: DetailDelegate?
     

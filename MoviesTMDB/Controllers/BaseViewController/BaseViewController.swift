@@ -8,7 +8,6 @@
 import UIKit
 
 class BaseViewController: UIViewController {
-    
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     func setupActivityIndicator() {

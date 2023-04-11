@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct Constants {
     static let cellIdentifier   = "ReusableCell"
     static let cellNibName      = "MovieCell"
